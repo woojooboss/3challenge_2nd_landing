@@ -748,8 +748,7 @@ h1, h2, h3 {
   border: 1.5px solid var(--border-dark);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-hard);
-  padding: 14px 14px 18px;
-  text-align: center;
+  overflow: hidden;
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .channel-card:hover {
@@ -760,19 +759,6 @@ h1, h2, h3 {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 12px;
-  border: 1px solid var(--border-soft);
-}
-.channel-tag {
-  margin-top: 14px;
-  display: inline-block;
-  padding: 6px 14px;
-  background: var(--pastel-yellow);
-  border: 1.5px solid var(--border-dark);
-  border-radius: var(--radius-pill);
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
 }
 
 /* ============================================================
@@ -1523,19 +1509,15 @@ h1, h2, h3 {
     <div class="channels">
       <div class="channel-card">
         <img src="01reels.png" alt="인스타그램 릴스 - 우주보스" loading="lazy" />
-        <div class="channel-tag">인스타그램 릴스</div>
       </div>
       <div class="channel-card">
         <img src="02shorts.png" alt="유튜브 쇼츠 - 우주보스" loading="lazy" />
-        <div class="channel-tag">유튜브 쇼츠</div>
       </div>
       <div class="channel-card">
         <img src="03tiktok.png" alt="틱톡 - 우주보스" loading="lazy" />
-        <div class="channel-tag">틱톡</div>
       </div>
       <div class="channel-card">
         <img src="04clip.png" alt="네이버 클립 - 우주보스" loading="lazy" />
-        <div class="channel-tag">네이버 클립</div>
       </div>
     </div>
   </div>
