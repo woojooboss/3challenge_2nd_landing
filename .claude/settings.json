@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:m54-template.framer.website)",
+      "Bash(git init *)"
+    ]
+  }
+}
