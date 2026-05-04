@@ -47,6 +47,10 @@
   --radius-sm: 14px;
   --radius-pill: 999px;
 
+  /* Hard offset shadow (neo-brutalist) */
+  --shadow-hard: 5px 5px 0 var(--border-dark);
+  --shadow-hard-sm: 3px 3px 0 var(--border-dark);
+
   /* Type */
   --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -56,12 +60,17 @@
 ============================================================ */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
 body {
   font-family: var(--font);
   background: var(--bg-base);
   color: var(--text-primary);
   line-height: 1.6;
   font-weight: 500;
+  word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
 }
@@ -101,15 +110,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 ============================================================ */
 .eyebrow {
   display: inline-block;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--text-secondary);
-  padding: 6px 14px;
+  padding: 9px 18px;
   border: 1.5px solid var(--border-dark);
   border-radius: var(--radius-pill);
   background: var(--bg-white);
+  box-shadow: var(--shadow-hard-sm);
 }
 
 h1, h2, h3 {
@@ -144,6 +154,12 @@ h1, h2, h3 {
   line-height: 1.7;
   font-weight: 500;
 }
+.hl-yellow {
+  background: linear-gradient(transparent 55%, var(--pastel-yellow) 55%);
+  color: var(--text-primary);
+  font-weight: 800;
+  padding: 0 2px;
+}
 
 .body-text {
   font-size: 16px;
@@ -172,10 +188,18 @@ h1, h2, h3 {
   font-size: 16px;
   font-weight: 700;
   border: 1.5px solid var(--border-dark);
-  transition: transform .15s ease, background .15s ease;
+  box-shadow: var(--shadow-hard-sm);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
   white-space: nowrap;
 }
-.btn:hover { transform: translateY(-2px); }
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--border-dark);
+}
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--border-dark);
+}
 .btn-primary {
   background: var(--pastel-yellow);
   color: var(--text-primary);
@@ -242,12 +266,12 @@ h1, h2, h3 {
    Hero
 ============================================================ */
 .hero {
-  padding: 24px 24px 0;
+  padding: 8px 24px 0;
 }
 .hero-card {
   max-width: calc(var(--container) + 48px);
   margin: 0 auto;
-  padding: 80px 56px 72px;
+  padding: 64px 72px 100px;
   border-radius: var(--radius-lg);
   background: var(--bg-base);
   border: 1.5px solid var(--border-dark);
@@ -257,24 +281,47 @@ h1, h2, h3 {
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 32px;
+  gap: 10px;
+  margin-bottom: 44px;
+}
+.hero-kicker {
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  margin-bottom: 28px;
+}
+.hero-kicker em {
+  font-style: normal;
+  font-weight: 900;
+  color: var(--text-primary);
 }
 .hero-title {
-  margin-bottom: 28px;
+  margin-bottom: 72px;
 }
 .hero-title em {
   font-style: normal;
   background: var(--pastel-yellow);
-  padding: 0 12px;
-  border-radius: 12px;
+  padding: 0 16px;
+  border-radius: 14px;
   border: 1.5px solid var(--border-dark);
   display: inline-block;
-  margin: 4px 0;
+  margin-top: 14px;
 }
-.hero-sub {
-  max-width: 640px;
-  margin-bottom: 40px;
+.hero-cover {
+  margin: 0 auto 64px;
+  max-width: 850px;
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-white);
+  box-shadow: var(--shadow-hard);
+}
+.hero-cover img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 .hero-actions {
   display: flex;
@@ -283,10 +330,10 @@ h1, h2, h3 {
   align-items: center;
 }
 .hero-checks {
-  margin-top: 28px;
+  margin-top: 40px;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 24px;
 }
 .hero-check {
   display: inline-flex;
@@ -324,7 +371,7 @@ h1, h2, h3 {
   display: flex;
   gap: 48px;
   white-space: nowrap;
-  animation: scroll 28s linear infinite;
+  animation: scroll 15s linear infinite;
   font-weight: 800;
   font-size: 18px;
   letter-spacing: 0.02em;
@@ -357,6 +404,7 @@ h1, h2, h3 {
   border: 1.5px solid var(--border-dark);
   border-radius: var(--radius-md);
   background: var(--bg-white);
+  box-shadow: var(--shadow-hard);
 }
 .pain-item .x {
   display: inline-grid;
@@ -369,12 +417,12 @@ h1, h2, h3 {
   margin-bottom: 16px;
 }
 .pain-item h3 {
-  font-size: 18px;
+  font-size: 23px;
   font-weight: 800;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .pain-item p {
-  font-size: 14px;
+  font-size: 19px;
   color: var(--text-secondary);
   line-height: 1.6;
 }
@@ -389,6 +437,12 @@ h1, h2, h3 {
   border-radius: var(--radius-md);
   text-align: center;
   line-height: 1.4;
+  box-shadow: var(--shadow-hard);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.quote-strong:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--border-dark);
 }
 
 /* ============================================================
@@ -396,7 +450,7 @@ h1, h2, h3 {
 ============================================================ */
 .solution-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-top: 48px;
 }
@@ -406,9 +460,21 @@ h1, h2, h3 {
   border-radius: var(--radius-md);
   background: var(--bg-white);
   position: relative;
+  box-shadow: var(--shadow-hard);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.solution-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--border-dark);
 }
 .solution-card.is-yellow { background: var(--pastel-yellow); }
+.solution-card.is-yellow .solution-tag {
+  font-size: 14px;
+  padding: 8px 18px;
+  letter-spacing: 1.2px;
+}
 .solution-card.is-mint { background: var(--pastel-mint); }
+.solution-card.is-lavender { background: var(--pastel-lavender); }
 .solution-tag {
   display: inline-block;
   padding: 6px 14px;
@@ -500,12 +566,38 @@ h1, h2, h3 {
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--bg-white);
+  box-shadow: var(--shadow-hard);
+}
+.calendar-img-wrap {
+  position: relative;
 }
 .calendar-item img {
   width: 100%;
   height: auto;
   display: block;
 }
+.calendar-pin {
+  position: absolute;
+  background: var(--pastel-yellow);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  box-shadow: var(--shadow-hard-sm);
+  white-space: nowrap;
+  transform: rotate(-6deg);
+  z-index: 2;
+}
+.calendar-pin::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.calendar-pin.is-start { top: 42%; left: 21%; }
+.calendar-pin.is-goal  { top: 75%; left: 61%; transform: rotate(6deg); }
 .calendar-meta {
   display: flex;
   justify-content: space-between;
@@ -532,6 +624,7 @@ h1, h2, h3 {
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.02em;
+  word-break: keep-all;
 }
 .schedule-summary .accent {
   color: var(--pastel-yellow);
@@ -554,6 +647,12 @@ h1, h2, h3 {
   position: relative;
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-hard);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.benefit-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--border-dark);
 }
 .benefit-card.is-highlight { background: var(--pastel-yellow); }
 .benefit-num {
@@ -565,14 +664,14 @@ h1, h2, h3 {
   margin-bottom: 24px;
 }
 .benefit-card h3 {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: 12px;
   line-height: 1.3;
 }
 .benefit-card p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-secondary);
   line-height: 1.6;
   flex: 1;
@@ -600,6 +699,83 @@ h1, h2, h3 {
 }
 
 /* ============================================================
+   Testimonials (리얼 후기)
+============================================================ */
+.testimonials {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 48px;
+}
+.testimonial-card {
+  background: var(--bg-white);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-hard);
+  padding: 18px;
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.testimonial-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--border-dark);
+}
+.testimonial-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+.testimonial-caption {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Channels (강사 운영 채널 4개)
+============================================================ */
+.channels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.channel-card {
+  background: var(--bg-white);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-hard);
+  padding: 14px 14px 18px;
+  text-align: center;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.channel-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--border-dark);
+}
+.channel-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+}
+.channel-tag {
+  margin-top: 14px;
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--pastel-yellow);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+/* ============================================================
    Pricing (yellow background — main impact)
 ============================================================ */
 .section-yellow {
@@ -611,17 +787,84 @@ h1, h2, h3 {
   gap: 24px;
   margin-top: 56px;
 }
+.deposit-bar + .price-wrap { margin-top: 0; }
 .price-card {
   padding: 48px 40px;
   border: 1.5px solid var(--border-dark);
   border-radius: var(--radius-lg);
   background: var(--bg-white);
   position: relative;
+  box-shadow: var(--shadow-hard);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.price-card .price-cta {
+  margin-top: auto;
+}
+.price-badge-circle {
+  position: absolute;
+  top: -10px;
+  right: 8px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #FF3B3B;
+  color: #fff;
+  border: 1.5px solid var(--border-dark);
+  box-shadow: var(--shadow-hard-sm);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 36px;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-align: center;
+  transform: rotate(12deg);
+  z-index: 3;
+}
+/* Earlybird CTA: arrow only (button itself is static; the card lifts on hover) */
+#ctaEarly {
+  position: relative;
+  padding-right: 56px;
+  overflow: hidden;
+}
+#ctaEarly::after {
+  content: "→";
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  font-weight: 800;
+  font-size: 22px;
+  transition: transform .25s ease;
+}
+.price-card.is-active:hover #ctaEarly::after {
+  transform: translateY(-50%) translateX(6px);
+}
+
+/* Active price card: lift on hover (matches other cards) */
+.price-card {
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.price-card.is-active:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--bg-white);
+}
+
+.price-badge-circle small {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  opacity: 0.95;
+  margin-bottom: 4px;
 }
 .price-card.is-active {
   background: var(--bg-dark);
   color: var(--bg-white);
-  transform: translateY(-8px);
+  box-shadow: 5px 5px 0 var(--bg-white);
 }
 .price-card.is-active .caption,
 .price-card.is-active .price-strike { color: var(--text-on-dark); opacity: 0.7; }
@@ -647,10 +890,11 @@ h1, h2, h3 {
 }
 .price-num .won { font-size: 0.5em; vertical-align: super; }
 .price-strike {
-  font-size: 18px;
+  font-size: 22px;
   text-decoration: line-through;
   color: var(--text-muted);
   margin-bottom: 16px;
+  font-weight: 600;
 }
 .price-period {
   font-size: 14px;
@@ -659,6 +903,14 @@ h1, h2, h3 {
   line-height: 1.5;
 }
 .price-card.is-active .price-period { color: var(--text-on-dark); opacity: 0.85; }
+.price-card:not(.is-active) .price-num,
+.price-card:not(.is-active) .price-tag,
+.price-card:not(.is-active) .price-period {
+  color: var(--text-muted);
+}
+.price-card:not(.is-active) .price-tag {
+  border-color: var(--text-muted);
+}
 .price-cta {
   display: block;
   width: 100%;
@@ -677,6 +929,7 @@ h1, h2, h3 {
   background: var(--bg-white);
   border: 1.5px solid var(--border-dark);
   border-radius: var(--radius-md);
+  box-shadow: var(--shadow-hard);
 }
 .value-stack h3 {
   font-size: 22px;
@@ -688,12 +941,24 @@ h1, h2, h3 {
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px 32px;
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: column;
+  gap: 14px 0;
+  position: relative;
+}
+.value-stack ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: #D8D8D8;
 }
 .value-stack li {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: 12px 24px;
   border-bottom: 1px dashed var(--border-soft);
   font-size: 15px;
   font-weight: 600;
@@ -730,6 +995,74 @@ h1, h2, h3 {
 }
 .limit-bar .accent { color: var(--pastel-yellow); font-weight: 800; }
 
+.deposit-bar {
+  margin: 56px auto;
+  max-width: 760px;
+  padding: 18px 26px;
+  background: var(--bg-white);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  word-break: keep-all;
+  box-shadow: var(--shadow-hard-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 14px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  flex-wrap: wrap;
+  color: var(--text-primary);
+}
+.deposit-bar .deposit-label {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--pastel-yellow);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+.deposit-bar .deposit-bank { font-weight: 800; }
+.deposit-bar .deposit-divider { color: var(--border-soft); }
+.deposit-bar .deposit-kakao {
+  display: inline-block;
+  padding: 8px 18px;
+  background: #FEE500;
+  color: #191600;
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-hard-sm);
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.deposit-bar .deposit-kakao:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--border-dark);
+}
+.step-kakao {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 14px;
+  background: #FEE500;
+  color: #191600;
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-hard-sm);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.step-kakao:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--border-dark);
+}
+
 /* ============================================================
    Countdown
 ============================================================ */
@@ -740,14 +1073,14 @@ h1, h2, h3 {
   border: 1.5px solid var(--border-dark);
   border-radius: var(--radius-md);
   text-align: center;
+  box-shadow: var(--shadow-hard);
 }
 .countdown-label {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  margin-bottom: 14px;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  margin-bottom: 18px;
 }
 .countdown {
   display: flex;
@@ -759,21 +1092,24 @@ h1, h2, h3 {
   background: var(--bg-dark);
   color: var(--bg-white);
   border-radius: var(--radius-sm);
-  padding: 14px 18px;
-  min-width: 80px;
+  padding: 26px 28px;
+  width: 132px;
   text-align: center;
+  box-sizing: border-box;
 }
 .cd-num {
-  font-size: 32px;
+  font-size: 64px;
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 .cd-unit {
   display: block;
-  margin-top: 6px;
-  font-size: 11px;
-  letter-spacing: 1px;
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: 1.5px;
   color: var(--pastel-yellow);
   font-weight: 700;
   text-transform: uppercase;
@@ -794,6 +1130,7 @@ h1, h2, h3 {
   border: 1.5px solid var(--border-dark);
   border-radius: var(--radius-md);
   position: relative;
+  box-shadow: var(--shadow-hard);
 }
 .step-num {
   font-size: 56px;
@@ -829,12 +1166,21 @@ h1, h2, h3 {
   text-align: center;
   padding: 100px 24px;
 }
+.final-cta-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 32px;
+}
+.final-cta-stack .btn-large { min-width: 320px; }
 .final-cta .quote {
   font-size: clamp(28px, 4vw, 48px);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.3;
   margin-bottom: 40px;
+  word-break: keep-all;
 }
 .final-cta .quote em {
   font-style: normal;
@@ -848,6 +1194,7 @@ h1, h2, h3 {
   max-width: 580px;
   margin-left: auto;
   margin-right: auto;
+  word-break: keep-all;
 }
 
 /* ============================================================
@@ -907,10 +1254,39 @@ h1, h2, h3 {
   .pain-list { grid-template-columns: 1fr; }
   .solution-grid { grid-template-columns: 1fr; }
   .benefits { grid-template-columns: 1fr; }
+  .testimonials { grid-template-columns: 1fr; }
+  .channels { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .price-wrap { grid-template-columns: 1fr; }
+  .price-card { padding: 36px 16px; max-width: 100%; }
+  .price-card .price-num { font-size: 48px; }
+  .price-card .price-strike { font-size: 18px; }
+  .price-card .btn-large { padding: 18px 24px; font-size: 15px; width: 100%; }
+  #ctaEarly { padding-right: 40px; }
+  #ctaEarly::after { right: 16px; font-size: 18px; }
   .price-card.is-active { transform: none; }
   .steps { grid-template-columns: 1fr; }
-  .value-stack ul { grid-template-columns: 1fr; }
+  .value-stack ul { grid-template-columns: 1fr; grid-auto-flow: row; grid-template-rows: none; }
+  .value-stack ul::before { display: none; }
+  .value-stack li {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 12px 0;
+    text-align: left;
+  }
+  .value-stack li strong { justify-self: start; }
+  .value-total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .calendar-pin {
+    padding: 4px 10px;
+    font-size: 11px;
+    border-width: 1px;
+  }
+  .calendar-pin.is-start { top: 39%; left: 22%; }
+  .calendar-pin.is-goal  { top: 70%; left: 60%; transform: rotate(6deg); }
   .footer-inner { grid-template-columns: 1fr; gap: 24px; }
 
   .result-row {
@@ -920,7 +1296,7 @@ h1, h2, h3 {
   }
   .result-num { font-size: 56px; }
 
-  .marquee-track { font-size: 15px; gap: 32px; }
+  .marquee-track { font-size: 15px; gap: 32px; animation-duration: 5s; }
   .marquee-track span { gap: 32px; }
 
   .topbar { padding: 14px 16px; }
@@ -959,8 +1335,25 @@ h1, h2, h3 {
   body { padding-bottom: 80px; }
 
   .schedule-summary { flex-direction: column; align-items: flex-start; }
-  .cd-cell { min-width: 64px; padding: 10px 14px; }
-  .cd-num { font-size: 24px; }
+  .countdown { gap: 8px; flex-wrap: nowrap; }
+  .deposit-bar {
+    flex-direction: column;
+    border-radius: var(--radius-md);
+    padding: 22px 20px;
+    font-size: 16px;
+    gap: 10px;
+  }
+  .deposit-bar .deposit-divider { display: none; }
+  .price-badge-circle {
+    width: 88px;
+    height: 88px;
+    font-size: 22px;
+    top: -8px;
+    right: 8px;
+  }
+  .cd-cell { width: 70px; padding: 14px 6px; }
+  .cd-num { font-size: 30px; }
+  .cd-unit { font-size: 10px; letter-spacing: 0.5px; margin-top: 8px; }
 }
 </style>
 </head>
@@ -983,25 +1376,24 @@ h1, h2, h3 {
       <span class="eyebrow">캡컷 PC 마스터 챌린지 2기</span>
       <span class="eyebrow" style="background:var(--pastel-yellow);">선착순 100명</span>
     </div>
-    <h1 class="hero-title h-hero">
-      언제까지<br />
-      <em>'생각만'</em> 하고<br />
-      계실 건가요?
-    </h1>
-    <p class="hero-sub lead">
-      2026년이 시작된 지 4개월, 딱 절반의 절반이 지나갔습니다.<br />
-      연초에 다짐했던 그 일들, 얼마나 진행되고 계신가요?
+    <p class="hero-kicker">
+      언제까지 <em>'생각만'</em> 하고 계실 건가요?
     </p>
+    <h1 class="hero-title h-hero">
+      숏폼 영상편집<br />
+      캡컷 PC 마스터<br />
+      <em>챌린지 2기</em>
+    </h1>
+    <div class="hero-cover">
+      <img src="hero-cover.gif" alt="캡컷 PC 편집 화면 미리보기" />
+    </div>
     <div class="hero-actions">
-      <a href="#pricing" class="btn btn-primary btn-large" id="heroCta">
-        <span id="heroCtaPrice">9만원</span>으로 신청하기
-      </a>
       <a href="#schedule" class="btn btn-outline btn-arrow">30회차 일정 보기</a>
     </div>
     <div class="hero-checks">
-      <span class="hero-check"><span class="check-dot">✓</span>3개월 30회차</span>
-      <span class="hero-check"><span class="check-dot">✓</span>VOD 22강 무료 제공</span>
-      <span class="hero-check"><span class="check-dot">✓</span>제작 소스팩 10GB</span>
+      <span class="hero-check"><span class="check-dot">✓</span>3개월 30회차 튜토리얼 영상</span>
+      <span class="hero-check"><span class="check-dot">✓</span>캡컷 별도 VOD 24강 추가 제공</span>
+      <span class="hero-check"><span class="check-dot">✓</span>콘텐츠 소스팩 10GB</span>
     </div>
   </div>
 </section>
@@ -1010,27 +1402,27 @@ h1, h2, h3 {
 <div class="marquee">
   <div class="marquee-track">
     <span>
-      얼리버드 9만원
-      <span class="marquee-dot">✦</span>
-      선착순 100명
-      <span class="marquee-dot">✦</span>
       5월 11일 시작
       <span class="marquee-dot">✦</span>
-      30회차 튜토리얼
+      30회차 튜토리얼 영상
       <span class="marquee-dot">✦</span>
-      VOD 22강 전원 제공
+      캡컷 별도 VOD 24강 제공
+      <span class="marquee-dot">✦</span>
+      얼리버드 50% 할인
+      <span class="marquee-dot">✦</span>
+      선착순 100명
       <span class="marquee-dot">✦</span>
     </span>
     <span aria-hidden="true">
-      얼리버드 9만원
-      <span class="marquee-dot">✦</span>
-      선착순 100명
-      <span class="marquee-dot">✦</span>
       5월 11일 시작
       <span class="marquee-dot">✦</span>
-      30회차 튜토리얼
+      30회차 튜토리얼 영상
       <span class="marquee-dot">✦</span>
-      VOD 22강 전원 제공
+      캡컷 별도 VOD 24강 제공
+      <span class="marquee-dot">✦</span>
+      얼리버드 50% 할인
+      <span class="marquee-dot">✦</span>
+      선착순 100명
       <span class="marquee-dot">✦</span>
     </span>
   </div>
@@ -1077,11 +1469,12 @@ h1, h2, h3 {
   <div class="section-inner">
     <span class="eyebrow">제가 앞선 발자국이 되어드립니다</span>
     <h2 class="h-section" style="margin-top:20px;">
-      1석 2조,<br />두 가지를 동시에.
+      1석 3조,<br />세 가지를 동시에.
     </h2>
-    <p class="lead" style="max-width:680px; margin-top:24px;">
-      3개월간 30개의 캡컷 PC 튜토리얼을 따라 만들면,<br />
-      편집 감각과 SNS 콘텐츠 자산이 동시에 쌓입니다.
+    <p class="lead" style="max-width:720px; margin-top:24px;">
+      3개월간 30개의 숏폼 영상 튜토리얼을 따라 만들면,<br />
+      편집 감각 상승, SNS 콘텐츠 포트폴리오,<br />
+      릴스·쇼츠·틱톡·클립 4개 채널 운영이 가능해 집니다.
     </p>
 
     <div class="solution-grid">
@@ -1089,8 +1482,8 @@ h1, h2, h3 {
         <span class="solution-tag">1석</span>
         <h3>캡컷 PC 마스터<br />레벨의 편집 감각</h3>
         <p>
-          캡컷 모바일은 누구나 합니다. 하지만 PC 버전은 다릅니다.<br /><br />
-          3개월간 30개 튜토리얼을 직접 손으로 만들다 보면, 자연스럽게 캡컷 PC 마스터 레벨의 편집 감각을 체득하게 됩니다. 영상 강의만 백 번 봐서는 절대 얻을 수 없는, <strong>'손이 기억하는' 편집 능력</strong>입니다.
+          훨씬 다양한 효과를 위해 PC 버전을 배웁니다.<br /><br />
+          3개월간 다양한 편집 효과를 적용하여 30개의 숏폼 튜토리얼을 직접 만들다 보면, 자연스럽게 캡컷 PC 마스터 수준의 편집 감각을 체득하게 됩니다. 영상 강의만 백 번 봐서는 절대 얻을 수 없는 <strong>'손이 기억하는' 편집 능력</strong>입니다.
         </p>
       </div>
       <div class="solution-card is-mint">
@@ -1098,7 +1491,15 @@ h1, h2, h3 {
         <h3>30개의 숏폼<br />콘텐츠 포트폴리오</h3>
         <p>
           폴더에 묻어두는 영상이 아닙니다.<br /><br />
-          여러분의 인스타 릴스, 유튜브 쇼츠, 틱톡, 네이버 클립에 하나씩 차곡차곡 업로드합니다. 3개월 후 SNS를 열어보면, <strong>"내가 이걸 다 만들었다고?"</strong> 라는 뿌듯함이 기다리고 있을 겁니다.
+          내 SNS 채널의 정체성과 톤&amp;매너를 유지하는데 가장 핵심이 되는 초반 30개의 콘텐츠를 직접 업로드 하게 됩니다. 3개월 뒤, <strong>"내가 이걸 만들었다고?"</strong> 라는 뿌듯함을 느끼게 되실 겁니다.
+        </p>
+      </div>
+      <div class="solution-card is-lavender">
+        <span class="solution-tag">3석</span>
+        <h3>릴스·쇼츠·틱톡·클립<br />4개 채널 확산 운영</h3>
+        <p>
+          30개의 숏폼 제작이 다가 아닙니다.<br /><br />
+          만들어진 숏폼을 인스타그램의 릴스, 유튜브의 쇼츠, 틱톡, 네이버의 클립, 4군데 채널 동시 발행으로 완벽한 <strong>One Source Multi Use</strong> 전략을 구사하실 수 있습니다.
         </p>
       </div>
     </div>
@@ -1154,6 +1555,39 @@ h1, h2, h3 {
   </div>
 </section>
 
+<!-- ===== Channels (강사 운영 채널) ===== -->
+<section class="section" style="background:var(--bg-white);">
+  <div class="section-inner">
+    <span class="eyebrow">강사가 운영 중인 채널</span>
+    <h2 class="h-section" style="margin-top:20px;">
+      이 길, 제가 먼저<br />걷고 있습니다.
+    </h2>
+    <p class="lead" style="max-width:760px; margin-top:24px;">
+      말로만 가르치지 않습니다. <strong>4개 플랫폼을 동시에 직접 운영</strong>하며,<br />
+      매일 데이터를 보고, 매주 콘텐츠를 만듭니다. 그 경험을 그대로 전해드립니다.
+    </p>
+
+    <div class="channels">
+      <div class="channel-card">
+        <img src="01reels.png" alt="인스타그램 릴스 - 우주보스" loading="lazy" />
+        <div class="channel-tag">인스타그램 릴스</div>
+      </div>
+      <div class="channel-card">
+        <img src="02shorts.png" alt="유튜브 쇼츠 - 우주보스" loading="lazy" />
+        <div class="channel-tag">유튜브 쇼츠</div>
+      </div>
+      <div class="channel-card">
+        <img src="03tiktok.png" alt="틱톡 - 우주보스" loading="lazy" />
+        <div class="channel-tag">틱톡</div>
+      </div>
+      <div class="channel-card">
+        <img src="04clip.png" alt="네이버 클립 - 우주보스" loading="lazy" />
+        <div class="channel-tag">네이버 클립</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== Schedule (calendars) ===== -->
 <section class="section" id="schedule">
   <div class="section-inner">
@@ -1162,13 +1596,16 @@ h1, h2, h3 {
       30회차 일정,<br />미리 박아두었습니다.
     </h2>
     <p class="lead" style="max-width:680px; margin-top:24px;">
-      도망갈 수 없게, 미루지 못하게.<br />
+      <mark class="hl-yellow">도망갈 수 없게, 미루지 못하게.</mark><br />
       5월 11일(월) 1회차 시작 → 7월 30일(목) 30회차 완주.
     </p>
 
     <div class="calendars">
       <div class="calendar-item">
-        <img src="2026-05-may.png" alt="2026년 5월 캘린더 — 1회차부터 8회차까지" />
+        <div class="calendar-img-wrap">
+          <img src="2026-05-may.png" alt="2026년 5월 캘린더 — 1회차부터 8회차까지" />
+          <span class="calendar-pin is-start">스타트 →</span>
+        </div>
         <div class="calendar-meta">
           <span>2026년 5월</span>
           <span>1회차 ~ 8회차</span>
@@ -1182,7 +1619,10 @@ h1, h2, h3 {
         </div>
       </div>
       <div class="calendar-item">
-        <img src="2026-07-jul.png" alt="2026년 7월 캘린더 — 20회차부터 30회차까지" />
+        <div class="calendar-img-wrap">
+          <img src="2026-07-jul.png" alt="2026년 7월 캘린더 — 20회차부터 30회차까지" />
+          <span class="calendar-pin is-goal">GOAL →</span>
+        </div>
         <div class="calendar-meta">
           <span>2026년 7월</span>
           <span>20회차 ~ 30회차</span>
@@ -1208,42 +1648,61 @@ h1, h2, h3 {
     <div class="benefits">
       <div class="benefit-card is-highlight">
         <div class="benefit-num">01</div>
-        <h3>캡컷 PC 튜토리얼 30개</h3>
+        <h3>캡컷 PC 튜토리얼 영상 30개</h3>
         <p>정해진 날짜에 하나씩 업로드. 평생 소장 가능합니다.</p>
         <span class="benefit-value">3개월 · 30회차</span>
       </div>
       <div class="benefit-card">
-        <span class="benefit-badge">2기 신규 🎁</span>
+        <span class="benefit-badge">배보다 큰 배꼽 혜택</span>
         <div class="benefit-num">02</div>
-        <h3>제작 소스팩 10GB</h3>
-        <p>효과음·BGM·트랜지션·자막 템플릿·이미지 소스. 영상 만들 때 바로 쓸 수 있는 알찬 소스팩.</p>
-        <span class="benefit-value">10GB</span>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-num">03</div>
-        <h3>ZOOM 라이브 특강 1회</h3>
-        <p>캡컷 PC 핵심 워크플로우, 4개 플랫폼별 업로드 최적화 노하우, 1기 인사이트 공유.</p>
-        <span class="benefit-value">실시간 LIVE</span>
-      </div>
-      <div class="benefit-card">
-        <span class="benefit-badge">⭐</span>
-        <div class="benefit-num">04</div>
-        <h3>참여자 전용 단톡방</h3>
-        <p>매일 인증, 서로의 콘텐츠에 피드백, 질문하면 답이 즉시 돌아오는 공간. 1기 때 가장 강력했던 부분.</p>
-        <span class="benefit-value">3개월 운영</span>
-      </div>
-      <div class="benefit-card">
-        <span class="benefit-badge">2기 신규 🎁</span>
-        <div class="benefit-num">05</div>
-        <h3>VOD 22강 전원 제공</h3>
-        <p>148,000원에 판매 중인 '2025 인스타 5만 만들기 A to Z' VOD 22강을 참여자 전원에게.</p>
+        <h3>캡컷 VOD 24강 별도 제공<br /><small style="font-weight:700; font-size:0.8em; color:var(--text-secondary);">(기본편 + 실습편)</small></h3>
+        <p>148,000원에 판매 중인 '캡컷 PC 실전 마스터' VOD 24강을 참여자 전원에게.</p>
         <span class="benefit-value">14만 8천원 상당</span>
       </div>
       <div class="benefit-card">
-        <div class="benefit-num">06</div>
-        <h3>오픈채팅방 Q&A 무제한</h3>
-        <p>챌린지 기간 중 어떤 질문이든 우주보스에게 직접 물어볼 수 있습니다.</p>
-        <span class="benefit-value">무제한</span>
+        <div class="benefit-num">03</div>
+        <h3>콘텐츠 소스팩 10GB</h3>
+        <p>효과음, 배경영상, 트랜지션, 이미지, 오버레이 등 영상 만들 때 바로 쓸 수 있는 알찬 소스팩.</p>
+        <span class="benefit-value">10GB</span>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">04</div>
+        <h3>참여자 전용 라이브 특강 1회</h3>
+        <p>우주보스 채널 운영 노하우, 콘텐츠 기획부터 제작 프로세스, 영상 제작 Q&amp;A.</p>
+        <span class="benefit-value">실시간 LIVE</span>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-badge">강력한 혜택</span>
+        <div class="benefit-num">05</div>
+        <h3>참여자 전용 단톡방 운영</h3>
+        <p>업로드 인증, 서로의 콘텐츠 피드백, 자유로운 Q&amp;A 및 인사이트 나눔.</p>
+        <span class="benefit-value">3개월 운영</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Testimonials (리얼 후기) ===== -->
+<section class="section">
+  <div class="section-inner">
+    <span class="eyebrow">리얼 후기</span>
+    <h2 class="h-section" style="margin-top:20px;">
+      후기는<br />거짓말을 하지 않습니다.
+    </h2>
+    <p class="lead" style="max-width:780px; margin-top:24px;">
+      "이 정도는 알겠지?" 라고 스킵하지 않습니다.<br />
+      제 강의를 들어보신 분들은 아실 겁니다.<br />
+      누구보다 꼼꼼하게 알기 쉽게 진행하는 <strong>4060세대 최적화 강의</strong>입니다.
+    </p>
+
+    <div class="testimonials">
+      <div class="testimonial-card">
+        <img src="scroll01.gif" alt="카카오톡으로 받은 수강생 후기 모음" loading="lazy" />
+        <p class="testimonial-caption">카카오톡으로 받은 수강생 후기</p>
+      </div>
+      <div class="testimonial-card">
+        <img src="scroll02.gif" alt="유튜브 라이브에서 받은 수강생 후기 모음" loading="lazy" />
+        <p class="testimonial-caption">유튜브 라이브에서 받은 후기</p>
       </div>
     </div>
   </div>
@@ -1272,15 +1731,25 @@ h1, h2, h3 {
       </div>
     </div>
 
+    <!-- 온라인 입금 안내 -->
+    <div class="deposit-bar" id="deposit">
+      <span class="deposit-label">온라인 입금</span>
+      <span><span class="deposit-bank">국민은행 409101-01-272916</span> · 예금주 김민욱</span>
+      <span class="deposit-divider">|</span>
+      <span>입금 후 카톡으로 '성함' 알려주세요 ☺️</span>
+      <a href="https://open.kakao.com/o/slTp4P8b" target="_blank" rel="noopener" class="deposit-kakao">카톡 바로 보내기 →</a>
+    </div>
+
     <div class="price-wrap">
       <!-- Earlybird -->
       <div class="price-card is-active" id="cardEarly">
+        <span class="price-badge-circle">50%<br />할인</span>
         <span class="price-tag">얼리버드 · 5/8(금) 23:59까지</span>
         <div class="price-strike">정상가 180,000원</div>
         <div class="price-num">90,000<span class="won">원</span></div>
         <div class="price-period">한 달에 단 3만원 꼴<br />2026.05.04 (월) ~ 2026.05.08 (금) 23:59:59</div>
         <a href="https://s.tosspayments.com/BmZrq61sBBm" target="_blank" rel="noopener" class="btn btn-primary btn-large price-cta" id="ctaEarly">
-          얼리버드 9만원 신청하기
+          얼리버드 9만원 신용카드 결제
         </a>
       </div>
       <!-- Regular -->
@@ -1299,21 +1768,21 @@ h1, h2, h3 {
     <div class="value-stack">
       <h3>9만원 안에 들어있는 것</h3>
       <ul>
-        <li><span>VOD 22강 (인스타 5만 A to Z)</span><strong>148,000원</strong></li>
-        <li><span>제작 소스팩 10GB</span><strong>가치 환산 어려움</strong></li>
-        <li><span>캡컷 PC 튜토리얼 30개</span><strong>3개월 분량</strong></li>
-        <li><span>ZOOM 라이브 특강 1회</span><strong>실시간</strong></li>
-        <li><span>참여자 단톡방 3개월 운영</span><strong>1기 가장 강력했던 부분</strong></li>
-        <li><span>오픈채팅방 Q&A 무제한</span><strong>3개월</strong></li>
+        <li><span>캡컷 PC 숏폼 튜토리얼 영상 30개</span><strong>3개월 분량</strong></li>
+        <li><span>캡컷 마스터 별도 VOD 24강</span><strong>148,000원</strong></li>
+        <li><span>콘텐츠 소스팩 10GB</span><strong>평생 소장 가능</strong></li>
+        <li><span>실시간 라이브 특강 1회</span><strong>참여자 전용</strong></li>
+        <li><span>참여자 전용 단톡방 운영</span><strong>1기 가장 강력했던 부분</strong></li>
+        <li><span>매일 인증 하기</span><strong>정확한 데이터 수집</strong></li>
       </ul>
       <div class="value-total">
-        <span>이 모든 게 얼리버드</span>
-        <span class="accent">9만원</span>
+        <span>이 모든 게 얼리버드 할인가</span>
+        <span class="accent"><s style="opacity:0.5; font-weight:700; margin-right:10px;">18만원</s>9만원</span>
       </div>
     </div>
 
     <div class="limit-bar">
-      🎯 <span class="accent">선착순 100명 한정</span> · 100명이 차면 얼리버드 기간이 남아있어도 조기 마감됩니다.
+      🎯 얼리버드 할인 기간 종료 후 자동으로 <span class="accent">정상가 금액</span>으로 변경됩니다.
     </div>
   </div>
 </section>
@@ -1330,17 +1799,17 @@ h1, h2, h3 {
       <div class="step-card">
         <div class="step-num">01</div>
         <h3>결제하기</h3>
-        <p>위의 신청 버튼을 눌러 토스페이먼츠로 결제합니다. 카드 3개월 무이자도 가능합니다.</p>
+        <p>위 계좌로 온라인 입금하시거나, 신용카드 결제를 합니다. 신용카드 3개월 무이자 가능합니다.</p>
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
-        <h3>구글 신청폼 작성</h3>
-        <p>결제 후 안내되는 구글 신청폼을 작성해 주세요. 챌린지 단톡방 입장 안내가 발송됩니다.</p>
+        <h3>온라인 입금시</h3>
+        <p>저에게 <strong style="color:var(--text-primary); font-weight:800;">카톡으로 입금자 성함</strong>을 알려주시면 챌린지 단톡방 입장 안내 드립니다. <a href="https://open.kakao.com/o/slTp4P8b" target="_blank" rel="noopener" class="step-kakao">카톡 바로 보내기 →</a></p>
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
-        <h3>5월 11일을 기다리기</h3>
-        <p>참여자 전용 단톡방으로 초대됩니다. 5월 11일(월) 1회차 튜토리얼이 첫 인사가 됩니다.</p>
+        <h3>5월 11일(월)을 기다리기</h3>
+        <p>첫 튜토리얼 영상 업로드 전에 단톡방 초대와 O.T 영상 제공으로 사전 안내 드립니다.</p>
       </div>
     </div>
   </div>
@@ -1358,11 +1827,16 @@ h1, h2, h3 {
       '정해진 날짜에, 함께'가 없어서 못하는 것뿐입니다.<br /><br />
       그 '정해진 날짜'와 '함께'를, 제가 만들어 드리겠습니다.
     </p>
-    <a href="#pricing" class="btn btn-primary btn-large" id="finalCta">
-      <span id="finalCtaPrice">9만원</span>으로 지금 신청하기 →
-    </a>
+    <div class="final-cta-stack">
+      <a href="#deposit" class="btn btn-outline btn-large">
+        온라인 입금 계좌 안내 →
+      </a>
+      <a href="https://s.tosspayments.com/BmZrq61sBBm" target="_blank" rel="noopener" class="btn btn-primary btn-large" id="finalCta">
+        <span id="finalCtaPrice">9만원</span> 신용카드 결제하기 →
+      </a>
+    </div>
     <p style="margin-top:24px; color:rgba(255,255,255,0.5); font-size:14px;">
-      7월 30일, 완주증을 손에 쥐는 그날까지 — 우주보스 드림.
+      7월 30일! 미션 완수의 쾌거를 만끽하는 그날 까지 — 우주보스 드림
     </p>
   </div>
 </section>
@@ -1372,7 +1846,7 @@ h1, h2, h3 {
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="brand">
-        <span class="brand-mark">우</span>
+        <span class="brand-mark" style="background:var(--pastel-yellow); color:var(--text-primary);">우</span>
         <span style="color:#fff;">우주보스</span>
       </div>
       <p style="margin-top:16px; font-size:13px; color:rgba(255,255,255,0.5);">
@@ -1385,7 +1859,7 @@ h1, h2, h3 {
       <dt>대표</dt><dd>김민욱</dd>
       <dt>사업자번호</dt><dd>442-03-01602</dd>
       <dt>통신판매</dt><dd>제2020-서울성북-0334호</dd>
-      <dt>주소</dt><dd>서울시 성북구 돌곶이로8길 22</dd>
+      <dt>주소</dt><dd>경기도 구리시 갈매중앙로 190</dd>
       <dt>연락처</dt><dd>010-4511-4447</dd>
     </dl>
   </div>
@@ -1397,8 +1871,8 @@ h1, h2, h3 {
 <!-- ===== Sticky Mobile CTA ===== -->
 <div class="sticky-cta">
   <div class="price-now">
-    <span id="stickyPrice">9만원</span>
-    <small id="stickyLabel">얼리버드 · 마감까지 D-<span id="stickyDday">-</span></small>
+    <span id="stickyPrice">얼리버드 할인</span>
+    <small id="stickyLabel">마감까지 D-<span id="stickyDday">-</span></small>
   </div>
   <a href="#" class="btn btn-primary" id="stickyCta">신청하기</a>
 </div>
@@ -1442,13 +1916,18 @@ h1, h2, h3 {
 
   function setEarlybirdMode() {
     // 가격/링크
-    heroCtaPrice.textContent  = '9만원';
-    finalCtaPrice.textContent = '9만원';
-    stickyPrice.textContent   = '9만원';
-    heroCta.setAttribute('href', '#pricing');
-    finalCta.setAttribute('href', '#pricing');
-    stickyCta.setAttribute('href', EARLY_LINK);
-    stickyCta.setAttribute('target', '_blank');
+    if (heroCtaPrice) heroCtaPrice.textContent  = '9만원';
+    if (finalCtaPrice) finalCtaPrice.textContent = '9만원';
+    if (stickyPrice) stickyPrice.textContent   = '얼리버드 할인';
+    if (heroCta) heroCta.setAttribute('href', '#pricing');
+    if (finalCta) {
+      finalCta.setAttribute('href', EARLY_LINK);
+      finalCta.setAttribute('target', '_blank');
+    }
+    if (stickyCta) {
+      stickyCta.setAttribute('href', EARLY_LINK);
+      stickyCta.setAttribute('target', '_blank');
+    }
 
     // 카드 활성/비활성
     cardEarly.classList.add('is-active');
@@ -1458,14 +1937,19 @@ h1, h2, h3 {
   }
 
   function setRegularMode() {
-    heroCtaPrice.textContent  = '18만원';
-    finalCtaPrice.textContent = '18만원';
-    stickyPrice.textContent   = '18만원';
-    stickyLabel.innerHTML     = '정상가 · 선착순 100명';
-    heroCta.setAttribute('href', '#pricing');
-    finalCta.setAttribute('href', '#pricing');
-    stickyCta.setAttribute('href', REGULAR_LINK);
-    stickyCta.setAttribute('target', '_blank');
+    if (heroCtaPrice) heroCtaPrice.textContent  = '18만원';
+    if (finalCtaPrice) finalCtaPrice.textContent = '18만원';
+    if (stickyPrice) stickyPrice.textContent   = '정상가 신청';
+    if (stickyLabel) stickyLabel.innerHTML     = '선착순 100명 마감 시까지';
+    if (heroCta) heroCta.setAttribute('href', '#pricing');
+    if (finalCta) {
+      finalCta.setAttribute('href', REGULAR_LINK);
+      finalCta.setAttribute('target', '_blank');
+    }
+    if (stickyCta) {
+      stickyCta.setAttribute('href', REGULAR_LINK);
+      stickyCta.setAttribute('target', '_blank');
+    }
 
     cardEarly.classList.remove('is-active');
     cardRegular.classList.add('is-active');
