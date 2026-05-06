@@ -1075,29 +1075,80 @@ h1, h2, h3 {
   flex-wrap: wrap;
 }
 .cd-cell {
-  background: var(--bg-dark);
-  color: var(--bg-white);
-  border-radius: var(--radius-sm);
-  padding: 26px 28px;
   width: 132px;
   text-align: center;
   box-sizing: border-box;
 }
-.cd-num {
-  font-size: 64px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1;
+.flip {
+  position: relative;
+  width: 100%;
+  height: 116px;
+  perspective: 600px;
+  border-radius: var(--radius-sm);
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
 }
+.flip-card {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: var(--bg-dark);
+  color: var(--bg-white);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-top {
+  top: 0;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transform-origin: 50% 100%;
+}
+.flip-bottom {
+  bottom: 0;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  transform-origin: 50% 0%;
+}
+.flip-content {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.flip-top .flip-content { top: 0; }
+.flip-bottom .flip-content { bottom: 0; }
+.flip-anim-top {
+  z-index: 3;
+  animation: flipDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.flip-anim-bottom {
+  z-index: 3;
+  transform: rotateX(90deg);
+  animation: flipUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+@keyframes flipDown {
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(-90deg); }
+}
+@keyframes flipUp {
+  0%   { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}
 .cd-unit {
   display: block;
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 13px;
   letter-spacing: 1.5px;
-  color: var(--pastel-yellow);
-  font-weight: 700;
+  color: var(--text-primary);
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -1222,6 +1273,91 @@ h1, h2, h3 {
 }
 
 /* ============================================================
+   Curriculum (30 Lessons)
+============================================================ */
+.curriculum-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.curriculum-count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 14px 22px;
+  background: var(--pastel-lavender);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-hard);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.curriculum-count strong {
+  font-size: 26px;
+  color: var(--text-primary);
+}
+.curriculum-count span {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.curriculum-accent { color: #6B5BFF; }
+.curriculum-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-top: 48px;
+  border-top: 1.5px solid var(--border-dark);
+  border-bottom: 1.5px solid var(--border-dark);
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-dark);
+  box-shadow: var(--shadow-hard);
+  overflow: hidden;
+}
+.curriculum-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-soft);
+  transition: background .15s ease;
+}
+.curriculum-item:nth-child(odd) {
+  border-right: 1px solid var(--border-soft);
+}
+.curriculum-list .curriculum-item:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+.curriculum-item:hover {
+  background: #F8F6FF;
+}
+.curriculum-num {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #6B5BFF;
+  line-height: 1;
+}
+.curriculum-text {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+.curriculum-foot {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
    Sticky mobile CTA
 ============================================================ */
 .sticky-cta {
@@ -1240,6 +1376,16 @@ h1, h2, h3 {
   .pain-list { grid-template-columns: 1fr; }
   .solution-grid { grid-template-columns: 1fr; }
   .benefits { grid-template-columns: 1fr; }
+  .curriculum-list { grid-template-columns: 1fr; }
+  .curriculum-item { padding: 16px 18px; grid-template-columns: 48px 1fr; gap: 12px; }
+  .curriculum-item:nth-child(odd) { border-right: none; }
+  .curriculum-list .curriculum-item:last-child { border-bottom: none; }
+  .curriculum-list .curriculum-item:nth-last-child(-n+2):not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+  .curriculum-num { font-size: 18px; }
+  .curriculum-text { font-size: 14.5px; }
+  .curriculum-head { margin-bottom: 0; }
+  .curriculum-count { padding: 10px 16px; }
+  .curriculum-count strong { font-size: 22px; }
   .testimonials { grid-template-columns: 1fr; }
   .channels { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .price-wrap { grid-template-columns: 1fr; }
@@ -1337,8 +1483,10 @@ h1, h2, h3 {
     top: -8px;
     right: 6px;
   }
-  .cd-cell { width: 70px; padding: 14px 6px; }
-  .cd-num { font-size: 30px; }
+  .cd-cell { width: 70px; padding: 0; }
+  .flip { height: 64px; }
+  .flip-content { font-size: 36px; }
+  .cd-unit { font-size: 10px; letter-spacing: 1px; margin-top: 8px; }
   .cd-unit { font-size: 10px; letter-spacing: 0.5px; margin-top: 8px; }
 }
 </style>
@@ -1523,55 +1671,6 @@ h1, h2, h3 {
   </div>
 </section>
 
-<!-- ===== Results: 5가지 ===== -->
-<section class="section section-lavender">
-  <div class="section-inner">
-    <span class="eyebrow" style="background:var(--bg-white);">7월 30일, 여러분이 갖게 될 것</span>
-    <h2 class="h-section" style="margin-top:20px;">
-      완주하면<br />이것들이 남습니다.
-    </h2>
-
-    <div class="results">
-      <div class="result-row">
-        <div class="result-num">01</div>
-        <div class="result-body">
-          <h3>캡컷 PC 마스터 레벨의 편집 감각</h3>
-          <p>30개의 튜토리얼을 직접 손으로 만들어보면서 체득되는 편집 감각. 영상 강의만 백 번 봐서는 절대 얻을 수 없는, '손이 기억하는' 편집 능력입니다.</p>
-        </div>
-      </div>
-      <div class="result-row">
-        <div class="result-num">02</div>
-        <div class="result-body">
-          <h3>30개의 숏폼 콘텐츠 포트폴리오</h3>
-          <p>폴더에만 잠자는 영상이 아닙니다. 여러분의 인스타·유튜브·틱톡·네이버 클립에 실제로 업로드된, 살아있는 자산.</p>
-        </div>
-      </div>
-      <div class="result-row">
-        <div class="result-num">03</div>
-        <div class="result-body">
-          <h3>알고리즘이 인식하는 '활성 계정'</h3>
-          <p>주기적으로 꾸준하게 콘텐츠가 업로드되는 계정, 알고리즘이 가장 좋아하는 계정입니다. 조회수가 서서히 오르며, 떡상 확률이 높아지는 계정으로 인식되기 시작합니다.</p>
-        </div>
-      </div>
-      <div class="result-row">
-        <div class="result-num">04</div>
-        <div class="result-body">
-          <h3>깨지지 않는 실행 루틴</h3>
-          <p>3개월간 정해진 날짜에 한 번도 빠지지 않고 업로드하는 경험. 이게 몸에 배면, 그 다음엔 어떤 도전을 해도 "나는 끝까지 해내는 사람"이 됩니다.</p>
-        </div>
-      </div>
-      <div class="result-row">
-        <div class="result-num">05</div>
-        <div class="result-body">
-          <h3>2026년 하반기 고속 성장의 발판</h3>
-          <p>기반이 탄탄한 4개의 플랫폼, 실행 루틴이 몸에 배인 상태, 어떤 콘텐츠가 먹히는지 데이터를 가진 채로 시작하는 2026년 하반기.</p>
-          <span class="tagline">"나도 끝까지 해내는 사람이구나" — 이 자신감</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== Schedule (calendars) ===== -->
 <section class="section" id="schedule">
   <div class="section-inner">
@@ -1666,6 +1765,107 @@ h1, h2, h3 {
   </div>
 </section>
 
+<!-- ===== Curriculum (30 Lessons) ===== -->
+<section class="section" style="background:var(--bg-white);">
+  <div class="section-inner">
+    <div class="curriculum-head">
+      <div>
+        <span class="eyebrow">CURRICULUM · 30 LESSONS</span>
+        <h2 class="h-section" style="margin-top:20px;">
+          숏폼 영상 제작<br /><span class="curriculum-accent">30가지</span> 튜토리얼
+        </h2>
+      </div>
+      <div class="curriculum-count">
+        <strong>30</strong><span>LESSONS</span>
+      </div>
+    </div>
+
+    <div class="curriculum-list">
+      <div class="curriculum-item"><div class="curriculum-num">01.</div><div class="curriculum-text">화면에 손글씨 쓰기 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">02.</div><div class="curriculum-text">영상 속 찰칵 사진 찍는 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">03.</div><div class="curriculum-text">사진 속 특정 지점 후크 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">04.</div><div class="curriculum-text">책상 위에 튀어나오는 책들 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">05.</div><div class="curriculum-text">사물을 옮겨 다음 화면으로 전환 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">06.</div><div class="curriculum-text">횡 혹은 종으로 스크롤 되는 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">07.</div><div class="curriculum-text">Zoom In, Zoom Out 제품 소개 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">08.</div><div class="curriculum-text">전화 받는 수화기 속 목소리 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">09.</div><div class="curriculum-text">비트에 딱딱 떨어지는 화면 전환 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">10.</div><div class="curriculum-text">영상 속 특정 요소만 컬러 만드는 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">11.</div><div class="curriculum-text">텍스트로 만드는 애니메이션 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">12.</div><div class="curriculum-text">피부 톤 비포 &amp; 에프터 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">13.</div><div class="curriculum-text">손가락 위치에 맞춰 화면 전환 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">14.</div><div class="curriculum-text">휴대폰에서 문자 메시지 팝업 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">15.</div><div class="curriculum-text">고정 테두리에 움직이는 물체 맞추기 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">16.</div><div class="curriculum-text">영상 속 자주 쓰는 텍스트 효과 2가지</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">17.</div><div class="curriculum-text">0.2초 단위로 순식간에 전환되는 사물 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">18.</div><div class="curriculum-text">움직임에 따라 사물이 바뀌는 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">19.</div><div class="curriculum-text">휴대폰 속 사물 스크롤시 실제 사물이 바뀌는 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">20.</div><div class="curriculum-text">휴대폰 화면이 떠오르는 홀로그램 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">21.</div><div class="curriculum-text">외곽 테두리 이미지에 영상 일치시키는 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">22.</div><div class="curriculum-text">움직이는 사물에 임팩트 주는 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">23.</div><div class="curriculum-text">문열고 들어오는 인물이 무한 반복되는 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">24.</div><div class="curriculum-text">비트에 맞춘 멋진 스피드램핑 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">25.</div><div class="curriculum-text">텍스트에 맞춰 이동하는 요소 애니메이션 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">26.</div><div class="curriculum-text">AI 활용 시간의 흐름 타임랩스 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">27.</div><div class="curriculum-text">숏폼 제작시 자주 활용하는 실제 숏폼 제작 과정</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">28.</div><div class="curriculum-text">빠른 비트와 함께 전환하는 트레일러 영상 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">29.</div><div class="curriculum-text">동일 인물에 다양하게 변하는 환경 전환 효과</div></div>
+      <div class="curriculum-item"><div class="curriculum-num">30.</div><div class="curriculum-text">인물의 움직임에 따라 화면이 이동하는 효과</div></div>
+    </div>
+
+    <p class="curriculum-foot">매주 새로운 튜토리얼이 공개됩니다 · 총 30회차</p>
+  </div>
+</section>
+
+<!-- ===== Results: 5가지 ===== -->
+<section class="section section-lavender">
+  <div class="section-inner">
+    <span class="eyebrow" style="background:var(--bg-white);">7월 30일, 여러분이 갖게 될 것</span>
+    <h2 class="h-section" style="margin-top:20px;">
+      완주하면<br />이것들이 남습니다.
+    </h2>
+
+    <div class="results">
+      <div class="result-row">
+        <div class="result-num">01</div>
+        <div class="result-body">
+          <h3>캡컷 PC 마스터 레벨의 편집 감각</h3>
+          <p>30개의 튜토리얼을 직접 손으로 만들어보면서 체득되는 편집 감각. 영상 강의만 백 번 봐서는 절대 얻을 수 없는, '손이 기억하는' 편집 능력입니다.</p>
+        </div>
+      </div>
+      <div class="result-row">
+        <div class="result-num">02</div>
+        <div class="result-body">
+          <h3>30개의 숏폼 콘텐츠 포트폴리오</h3>
+          <p>폴더에만 잠자는 영상이 아닙니다. 여러분의 인스타·유튜브·틱톡·네이버 클립에 실제로 업로드된, 살아있는 자산.</p>
+        </div>
+      </div>
+      <div class="result-row">
+        <div class="result-num">03</div>
+        <div class="result-body">
+          <h3>알고리즘이 인식하는 '활성 계정'</h3>
+          <p>주기적으로 꾸준하게 콘텐츠가 업로드되는 계정, 알고리즘이 가장 좋아하는 계정입니다. 조회수가 서서히 오르며, 떡상 확률이 높아지는 계정으로 인식되기 시작합니다.</p>
+        </div>
+      </div>
+      <div class="result-row">
+        <div class="result-num">04</div>
+        <div class="result-body">
+          <h3>깨지지 않는 실행 루틴</h3>
+          <p>3개월간 정해진 날짜에 한 번도 빠지지 않고 업로드하는 경험. 이게 몸에 배면, 그 다음엔 어떤 도전을 해도 "나는 끝까지 해내는 사람"이 됩니다.</p>
+        </div>
+      </div>
+      <div class="result-row">
+        <div class="result-num">05</div>
+        <div class="result-body">
+          <h3>2026년 하반기 고속 성장의 발판</h3>
+          <p>기반이 탄탄한 4개의 플랫폼, 실행 루틴이 몸에 배인 상태, 어떤 콘텐츠가 먹히는지 데이터를 가진 채로 시작하는 2026년 하반기.</p>
+          <span class="tagline">"나도 끝까지 해내는 사람이구나" — 이 자신감</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== Testimonials (리얼 후기) ===== -->
 <section class="section">
   <div class="section-inner">
@@ -1708,10 +1908,34 @@ h1, h2, h3 {
     <div class="countdown-wrap" id="countdownWrap">
       <div class="countdown-label" id="countdownLabel">⏰ 얼리버드 마감까지</div>
       <div class="countdown" id="countdown">
-        <div class="cd-cell"><div class="cd-num" id="cdDays">--</div><span class="cd-unit">DAYS</span></div>
-        <div class="cd-cell"><div class="cd-num" id="cdHours">--</div><span class="cd-unit">HOURS</span></div>
-        <div class="cd-cell"><div class="cd-num" id="cdMins">--</div><span class="cd-unit">MINUTES</span></div>
-        <div class="cd-cell"><div class="cd-num" id="cdSecs">--</div><span class="cd-unit">SECONDS</span></div>
+        <div class="cd-cell">
+          <div class="flip" id="cdDays" data-value="--">
+            <div class="flip-card flip-top"><div class="flip-content">--</div></div>
+            <div class="flip-card flip-bottom"><div class="flip-content">--</div></div>
+          </div>
+          <span class="cd-unit">DAYS</span>
+        </div>
+        <div class="cd-cell">
+          <div class="flip" id="cdHours" data-value="--">
+            <div class="flip-card flip-top"><div class="flip-content">--</div></div>
+            <div class="flip-card flip-bottom"><div class="flip-content">--</div></div>
+          </div>
+          <span class="cd-unit">HOURS</span>
+        </div>
+        <div class="cd-cell">
+          <div class="flip" id="cdMins" data-value="--">
+            <div class="flip-card flip-top"><div class="flip-content">--</div></div>
+            <div class="flip-card flip-bottom"><div class="flip-content">--</div></div>
+          </div>
+          <span class="cd-unit">MINUTES</span>
+        </div>
+        <div class="cd-cell">
+          <div class="flip" id="cdSecs" data-value="--">
+            <div class="flip-card flip-top"><div class="flip-content">--</div></div>
+            <div class="flip-card flip-bottom"><div class="flip-content">--</div></div>
+          </div>
+          <span class="cd-unit">SECONDS</span>
+        </div>
       </div>
     </div>
 
@@ -1963,12 +2187,31 @@ h1, h2, h3 {
     var mins  = Math.floor((diff / (1000 * 60)) % 60);
     var secs  = Math.floor((diff / 1000) % 60);
 
-    cdDays.textContent  = pad(days);
-    cdHours.textContent = pad(hours);
-    cdMins.textContent  = pad(mins);
-    cdSecs.textContent  = pad(secs);
+    flipUpdate(cdDays,  pad(days));
+    flipUpdate(cdHours, pad(hours));
+    flipUpdate(cdMins,  pad(mins));
+    flipUpdate(cdSecs,  pad(secs));
 
     stickyDday.textContent = days;
+  }
+
+  function flipUpdate(flipEl, newVal) {
+    if (!flipEl) return;
+    var current = flipEl.getAttribute('data-value');
+    if (current === newVal) return;
+
+    flipEl.setAttribute('data-value', newVal);
+    flipEl.innerHTML =
+      '<div class="flip-card flip-top"><div class="flip-content">' + newVal + '</div></div>' +
+      '<div class="flip-card flip-bottom"><div class="flip-content">' + current + '</div></div>' +
+      '<div class="flip-card flip-top flip-anim-top"><div class="flip-content">' + current + '</div></div>' +
+      '<div class="flip-card flip-bottom flip-anim-bottom"><div class="flip-content">' + newVal + '</div></div>';
+
+    setTimeout(function () {
+      flipEl.innerHTML =
+        '<div class="flip-card flip-top"><div class="flip-content">' + newVal + '</div></div>' +
+        '<div class="flip-card flip-bottom"><div class="flip-content">' + newVal + '</div></div>';
+    }, 950);
   }
 
   // 초기화
