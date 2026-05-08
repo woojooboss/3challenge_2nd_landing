@@ -850,6 +850,12 @@ h1, h2, h3 {
   box-shadow: 8px 8px 0 var(--bg-white);
 }
 
+.price-badge-circle.is-closed {
+  background: #6B6B6B;
+  color: #fff;
+  font-size: 42px;
+  letter-spacing: -0.04em;
+}
 .price-badge-circle small {
   display: block;
   font-size: 13px;
@@ -1971,7 +1977,7 @@ src="https://www.facebook.com/tr?id=1565154850993604&ev=PageView&noscript=1"
     <!-- 온라인 입금 안내 -->
     <div class="deposit-bar" id="deposit">
       <span class="deposit-label">온라인 입금</span>
-      <span><span class="deposit-bank">국민은행 409101-01-272916</span> · 9만원 · 예금주 김민욱</span>
+      <span><span class="deposit-bank">국민은행 409101-01-272916</span> · <span id="depositAmount">9만원</span> · 예금주 김민욱</span>
       <span class="deposit-divider">|</span>
       <span>입금 후 카톡으로 '성함' 알려주세요 ☺️</span>
       <a href="https://open.kakao.com/o/slTp4P8b" target="_blank" rel="noopener" class="deposit-kakao">카톡 바로 보내기 →</a>
@@ -1980,13 +1986,13 @@ src="https://www.facebook.com/tr?id=1565154850993604&ev=PageView&noscript=1"
     <div class="price-wrap">
       <!-- Earlybird -->
       <div class="price-card is-active" id="cardEarly">
-        <span class="price-badge-circle">50%<br />할인</span>
+        <span class="price-badge-circle" id="priceBadge">50%<br />할인</span>
         <span class="price-tag">얼리버드 · 5/8(금) 23:59까지</span>
         <div class="price-strike">정상가 180,000원</div>
         <div class="price-num">90,000<span class="won">원</span></div>
         <div class="price-period">한 달에 단 3만원 꼴<br />2026.05.04 (월) ~ 2026.05.08 (금) 23:59:59</div>
         <a href="https://s.tosspayments.com/BmZrq61sBBm" target="_blank" rel="noopener" class="btn btn-primary btn-large price-cta" id="ctaEarly">
-          얼리버드 9만원 신용카드 결제
+          <span id="ctaEarlyText">얼리버드 9만원 신용카드 결제</span>
         </a>
       </div>
       <!-- Regular -->
@@ -1995,7 +2001,7 @@ src="https://www.facebook.com/tr?id=1565154850993604&ev=PageView&noscript=1"
         <div class="price-strike" style="visibility:hidden;">_</div>
         <div class="price-num">180,000<span class="won">원</span></div>
         <div class="price-period">2026.05.09 (토) 부터 적용<br />선착순 100명 마감 시까지</div>
-        <a href="https://s.tosspayments.com/BmbbVxoMfag" target="_blank" rel="noopener" class="btn btn-outline btn-large price-cta price-disabled" id="ctaRegular">
+        <a href="https://s.tosspayments.com/Bnghfzl4w1p" target="_blank" rel="noopener" class="btn btn-outline btn-large price-cta price-disabled" id="ctaRegular">
           정상가 18만원 신청하기
         </a>
       </div>
@@ -2003,7 +2009,7 @@ src="https://www.facebook.com/tr?id=1565154850993604&ev=PageView&noscript=1"
 
     <!-- Value stack -->
     <div class="value-stack">
-      <h3>9만원 안에 들어있는 것</h3>
+      <h3 id="valueStackTitle">9만원 안에 들어있는 것</h3>
       <ul>
         <li><span>캡컷 PC 숏폼 튜토리얼 영상 30개</span><strong>3개월 분량</strong></li>
         <li><span>캡컷 마스터 별도 VOD 24강</span><strong>148,000원</strong></li>
@@ -2013,8 +2019,8 @@ src="https://www.facebook.com/tr?id=1565154850993604&ev=PageView&noscript=1"
         <li><span>매일 인증 하기</span><strong>정확한 데이터 수집</strong></li>
       </ul>
       <div class="value-total">
-        <span>이 모든 게 얼리버드 할인가</span>
-        <span class="accent"><s style="opacity:0.5; font-weight:700; margin-right:10px;">18만원</s>9만원</span>
+        <span id="valueTotalLabel">이 모든 게 얼리버드 할인가</span>
+        <span class="accent" id="valueTotalAmount"><s style="opacity:0.5; font-weight:700; margin-right:10px;">18만원</s>9만원</span>
       </div>
     </div>
 
@@ -2123,7 +2129,7 @@ src="https://www.facebook.com/tr?id=1565154850993604&ev=PageView&noscript=1"
   var DEADLINE = new Date('2026-05-08T23:59:59+09:00').getTime();
 
   var EARLY_LINK   = 'https://s.tosspayments.com/BmZrq61sBBm';
-  var REGULAR_LINK = 'https://s.tosspayments.com/BmbbVxoMfag';
+  var REGULAR_LINK = 'https://s.tosspayments.com/Bnghfzl4w1p';
 
   // DOM refs
   var $ = function (id) { return document.getElementById(id); };
@@ -2193,8 +2199,33 @@ src="https://www.facebook.com/tr?id=1565154850993604&ev=PageView&noscript=1"
     ctaEarly.classList.add('price-disabled');
     ctaRegular.classList.remove('price-disabled');
 
+    // 버튼 색상 스왑: 얼리버드 → outline(흰색), 정상가 → primary(노랑)
+    ctaEarly.classList.remove('btn-primary');
+    ctaEarly.classList.add('btn-outline');
+    ctaRegular.classList.remove('btn-outline');
+    ctaRegular.classList.add('btn-primary');
+
+    // 배지: "50% 할인" 빨간 원 → "마감" 회색 원
+    var priceBadge = $('priceBadge');
+    if (priceBadge) {
+      priceBadge.innerHTML = '마감';
+      priceBadge.classList.add('is-closed');
+    }
+
     // 헤드라인 교체
     priceHeadline.innerHTML = '정상가 18만원,<br />선착순 100명 마감.';
+
+    // 하드코딩된 "9만원" 텍스트 자동 전환
+    var depositAmount  = $('depositAmount');
+    var ctaEarlyText   = $('ctaEarlyText');
+    var valueStackTitle = $('valueStackTitle');
+    var valueTotalLabel = $('valueTotalLabel');
+    var valueTotalAmount = $('valueTotalAmount');
+    if (depositAmount)   depositAmount.textContent   = '18만원';
+    if (ctaEarlyText)    ctaEarlyText.textContent    = '얼리버드 마감';
+    if (valueStackTitle) valueStackTitle.textContent = '18만원 안에 들어있는 것';
+    if (valueTotalLabel) valueTotalLabel.textContent = '정상가';
+    if (valueTotalAmount) valueTotalAmount.innerHTML = '18만원';
 
     // 카운트다운 영역을 안내로 교체
     countdownWrap.innerHTML =
