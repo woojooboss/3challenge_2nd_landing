@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:m54-template.framer.website)",
-      "Bash(git init *)"
+      "Bash(git init *)",
+      "Bash(grep -i -E \"\\\\.\\(gif|png\\)$\")",
+      "Bash(grep -iE \"platform|reel|short|tiktok|clip|릴스|쇼츠|틱톡|클립|\\\\.\\(png|jpg|jpeg|webp\\)$\")",
+      "Bash(git remote *)",
+      "Bash(git branch *)",
+      "Bash(git fetch *)"
     ]
   }
 }
